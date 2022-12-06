@@ -169,8 +169,8 @@ def main():
                         text[i] = item + ' '
 
                 for i, item in enumerate(text):
-                    if item == '[MASK]':
-                        text[i] = ''
+                    # if item == '[MASK]':
+                    #     text[i] = ''
                     if item == '[CLS]' or item == '[SEP]':
                         text[i] = '\n'
 
