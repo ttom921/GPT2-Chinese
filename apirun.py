@@ -1,4 +1,5 @@
 import argparse
+import json
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
@@ -10,9 +11,35 @@ CORS(app)
 
 @app.route('/')
 def index():
-    gettext()
+    # gettext()
     return 'hello!!'
 
+
+@app.route('/v0.1', methods=['GET'])
+def index2():
+    # gettext()
+    result = 'v0.1===hello!!'
+    return jsonify({'return': str(result)})
+
+
+@app.route('/v0.1/genparaph', methods=['POST'])
+def genparaph():
+    # 取得前端傳過來的數值
+    # print(request.json)
+    # request.json
+    postdata = json.loads(request.data)
+    # print(postdata)
+    prefix = postdata['prefix']
+    # print(f"param {prefix}")
+    length = postdata['length']
+
+    # paramValues = request.get_json()
+    # print(f"paramValues {paramValues}")
+    # prefix = paramValues['prefix']
+    # print(f"param {prefix}")
+    result = gettext(prefix,length)
+    return json.dumps(result)
+    # return jsonify({'return': str(result)})
 
 # @app.route('/predict', methods=['POST'])
 # def postInput():
@@ -27,6 +54,7 @@ def index():
 #     result = model.predict(input)
 
 #     return jsonify({'return': str(result)})
+
 
 if __name__ == '__main__':
     # # Parse the command - line arguments

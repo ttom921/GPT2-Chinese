@@ -1,0 +1,31 @@
+<form [formGroup]="formModel">
+  <mat-card class="full-width-height">
+    <p>
+      <mat-form-field>
+        <mat-label>請輸入一段訊息</mat-label>
+        <textarea formControlName="comment" matInput placeholder="message" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5" [maxLength]="255"></textarea>
+
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field>
+        <mat-label>請輸入文字長度</mat-label>
+        <input matInput placeholder="30" formControlName="textlength" />
+      </mat-form-field>
+    </p>
+
+    <mat-dialog-actions>
+      &nbsp;
+      <button mat-raised-button type="button" [disabled]="!formModel.valid" color="primary" (click)="Send()">發送</button>
+    </mat-dialog-actions>
+  </mat-card>
+  <mat-card>
+    <textarea style="width:50%;min-height: 20%;" [(ngModel)]="resmsg" [ngModelOptions]="{standalone: true}" cdkAutosizeMaxRows="80"></textarea>
+  </mat-card>
+
+</form>
+<div class="loading" *ngIf="isLoading">
+  <!-- loading... -->
+  <mat-progress-spinner mode="indeterminate" [strokeWidth]="8" [diameter]="80" style="margin:0 auto;">
+  </mat-progress-spinner>
+</div>

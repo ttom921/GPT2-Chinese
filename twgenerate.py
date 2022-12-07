@@ -130,16 +130,16 @@ def generate(n_ctx, model, context, length, tokenizer, temperature=1, top_k=0, t
                                repitition_penalty=repitition_penalty, device=device)
 
 
-def gettext():
+def gettext(prefix="核戰",length=30,temperature=1.0):
     print("getText")
-    prefix = "夏天,核戰,機器人"
+    prefix = prefix
     device = '0'
-    length = 30
+    length = length
     nsamples = 1
     tokenizer_path = "cache/vocab_small.txt"
     model_path = "model/"
     topp = 1
-    temperature = 1.0
+    temperature = temperature
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--device', default=device, type=str, required=False, help='生成设备')
@@ -233,6 +233,7 @@ def gettext():
                     samples_file.write('=' * 90)
                     samples_file.write('\n' * 2)
         print("=" * 80)
+        return ltext
         if generated == nsamples:
             # close file when finish writing.
             if args.save_samples:

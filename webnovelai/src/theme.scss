@@ -1,0 +1,34 @@
+/**
+* Created at 1397/12/14 (2019/3/5).
+* @author {@link https://mirismaili.github.io S. Mahdi Mir-Ismaili}
+*/
+// Below codes should only be included ONCE in your application.
+@import '~@angular/material/theming';
+@include mat-core();
+
+// Add your desired themes to this map.
+$themes-map: (
+  indigo-pink: (
+    primary-base: $mat-indigo,
+    accent-base: $mat-pink,
+  ),
+
+  deeppurple-amber: (
+    primary-base: $mat-deep-purple,
+    accent-base: $mat-amber,
+  ),
+
+  pink-bluegrey: (
+    primary-base: $mat-pink,
+    accent-base: $mat-blue-gray,
+  ),
+
+  purple-green: (
+    primary-base: $mat-purple,
+    accent-base: $mat-green,
+  ),
+);
+
+// Import the module and do the job:
+@import '_themes-core';
+@include make-stylesheets($themes-map);
