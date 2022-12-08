@@ -32,12 +32,13 @@ def genparaph():
     prefix = postdata['prefix']
     # print(f"param {prefix}")
     length = postdata['length']
-
+    nsamples = postdata['nsamples']
+    temperature = 1.0
     # paramValues = request.get_json()
     # print(f"paramValues {paramValues}")
     # prefix = paramValues['prefix']
     # print(f"param {prefix}")
-    result = gettext(prefix,length)
+    result = gettext(prefix, length, temperature, nsamples)
     return json.dumps(result)
     # return jsonify({'return': str(result)})
 

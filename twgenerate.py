@@ -130,12 +130,12 @@ def generate(n_ctx, model, context, length, tokenizer, temperature=1, top_k=0, t
                                repitition_penalty=repitition_penalty, device=device)
 
 
-def gettext(prefix="核戰",length=30,temperature=1.0):
-    print("getText")
+def gettext(prefix="核戰", length=30, temperature=1.0,nsamples=1):
+    # print("getText")
     prefix = prefix
     device = '0'
     length = length
-    nsamples = 1
+    nsamples = nsamples
     tokenizer_path = "cache/vocab_small.txt"
     model_path = "model/"
     topp = 1
@@ -193,11 +193,14 @@ def gettext(prefix="核戰",length=30,temperature=1.0):
         if not os.path.exists(args.save_samples_path):
             os.makedirs(args.save_samples_path)
         samples_file = open(args.save_samples_path + '/samples.txt', 'w', encoding='utf8')
+
     while True:
         raw_text = args.prefix
         context_tokens = tokenizer.convert_tokens_to_ids(tokenizer.tokenize(raw_text))
         generated = 0
+        resultText = []
         for _ in range(nsamples // batch_size):
+            sampletext = ""
             out = generate(
                 n_ctx=n_ctx,
                 model=model,
@@ -220,11 +223,17 @@ def gettext(prefix="核戰",length=30,temperature=1.0):
                     elif item == '[SEP]':
                         text[i] = '\n'
                 info = "=" * 40 + " SAMPLE " + str(generated) + " " + "=" * 40 + "\n"
-                print(info)
+                # print(info)
+                sampletext += info
+
                 text = ''.join(text).replace('##', '').strip()
                 ltext = simplified2Traditional(text)
+
                 # print(text)
-                print(ltext)
+                # print(ltext)
+                sampletext += ltext
+                sampletext += "\n"
+
                 if args.save_samples:
                     samples_file.write(info)
                     # samples_file.write(text)
@@ -232,13 +241,18 @@ def gettext(prefix="核戰",length=30,temperature=1.0):
                     samples_file.write('\n')
                     samples_file.write('=' * 90)
                     samples_file.write('\n' * 2)
-        print("=" * 80)
-        return ltext
+            sampletext += "=" * 80
+            # print(sampletext)
+            resultText.append(sampletext)
+        # print("=" * 80)
+        # return ltext
+
         if generated == nsamples:
             # close file when finish writing.
             if args.save_samples:
                 samples_file.close()
             break
+    return resultText
 
 
 def main():
@@ -342,4 +356,6 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    # main()
+    msg = gettext(prefix="核戰", length=10, temperature=1.0)
+    print(msg)

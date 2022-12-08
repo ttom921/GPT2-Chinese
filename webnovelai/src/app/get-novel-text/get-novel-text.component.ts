@@ -13,11 +13,13 @@ export class GetNovelTextComponent implements OnInit {
   formModel: FormGroup;
   formdata: any = {
     comment: "今年夏天",
-    textlength: "30"
+    textlength: "30",
+    nsamples: "1",
   };
   formErrors: any = {
     "comment": "",
     "textlength": "",
+    "nsamples": "",
     "formError": "",
   };
   vaildationMessages: any = {
@@ -28,6 +30,7 @@ export class GetNovelTextComponent implements OnInit {
     },
   };
   resmsg: any = null;
+  resmsglst: any = [];
   isLoading = false;
   //#endregion form相關
   constructor(
@@ -70,6 +73,14 @@ export class GetNovelTextComponent implements OnInit {
           //Validators.minLength(3),
           //Validators.maxLength(64),
         ]
+      ],
+      "nsamples": [
+        this.formdata.nsamples,
+        [
+          //Validators.required,
+          //Validators.minLength(3),
+          //Validators.maxLength(64),
+        ]
       ]
     });
     this.formModel.valueChanges.subscribe(
@@ -102,6 +113,7 @@ export class GetNovelTextComponent implements OnInit {
     let postdata = {
       "prefix": this.formdata.comment,
       "length": this.formdata.textlength,
+      "nsamples": this.formdata.nsamples,
     };
     // let body = JSON.stringify(postdata);
     //console.log(postdata);
@@ -109,7 +121,7 @@ export class GetNovelTextComponent implements OnInit {
       res => {
         console.log(res);
         this.hideLoadingScreen();
-        this.resmsg = res;
+        this.resmsglst = res;
       },
       error => {
         console.log(error);

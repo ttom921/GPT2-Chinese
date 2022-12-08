@@ -13,6 +13,12 @@
         <input matInput placeholder="30" formControlName="textlength" />
       </mat-form-field>
     </p>
+    <p>
+      <mat-form-field>
+        <mat-label>請輸入samples次數</mat-label>
+        <input matInput placeholder="1" formControlName="nsamples" />
+      </mat-form-field>
+    </p>
 
     <mat-dialog-actions>
       &nbsp;
@@ -20,7 +26,10 @@
     </mat-dialog-actions>
   </mat-card>
   <mat-card>
-    <textarea style="width:50%;min-height: 20%;" [(ngModel)]="resmsg" [ngModelOptions]="{standalone: true}" cdkAutosizeMaxRows="80"></textarea>
+    <div *ngFor="let item of resmsglst">
+      <textarea style="width:50%;min-height: 20%;">{{item}}</textarea>
+    </div>
+    <!-- <textarea style="width:50%;min-height: 20%;" [(ngModel)]="resmsg" [ngModelOptions]="{standalone: true}" cdkAutosizeMaxRows="80"></textarea> -->
   </mat-card>
 
 </form>
